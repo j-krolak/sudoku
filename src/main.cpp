@@ -15,6 +15,7 @@ int main(int argc, char** argv){
 
     SudokuBoard sudokuBoard;
     sudokuBoard.generateRandomSudoku(emptyCells);
+    bool solved = false;
 
     while(win.isOpen()){
 
@@ -32,42 +33,68 @@ int main(int argc, char** argv){
 
 
         // Game logic
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-            sudokuBoard.selectCell(sf::Mouse::getPosition(win));
-        }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)){
-            sudokuBoard.setNumIncell(1);
+
+        if(!solved){
+            if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                sudokuBoard.selectCell(sf::Mouse::getPosition(win));
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)){
+                sudokuBoard.setNumIncell(1);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)){
+                sudokuBoard.setNumIncell(2);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3)){
+                sudokuBoard.setNumIncell(3);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4)){
+                sudokuBoard.setNumIncell(4);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5)){
+                sudokuBoard.setNumIncell(5);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num6)){
+                sudokuBoard.setNumIncell(6);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num7)){
+                sudokuBoard.setNumIncell(7);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num8)){
+                sudokuBoard.setNumIncell(8);
+            }        
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num9)){
+                sudokuBoard.setNumIncell(9);
+            } 
+            solved = sudokuBoard.isSolved();
+            if(solved){
+                sudokuBoard.selectCell(sf::Vector2i(-1, -1));
+            }
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)){
-            sudokuBoard.setNumIncell(2);
+        else{
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)){
+                sudokuBoard.generateRandomSudoku(emptyCells);
+                solved = false;
+            }
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3)){
-            sudokuBoard.setNumIncell(3);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4)){
-            sudokuBoard.setNumIncell(4);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5)){
-            sudokuBoard.setNumIncell(5);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num6)){
-            sudokuBoard.setNumIncell(6);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num7)){
-            sudokuBoard.setNumIncell(7);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num8)){
-            sudokuBoard.setNumIncell(8);
-        }        
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num9)){
-            sudokuBoard.setNumIncell(9);
-        } 
 
         // Rendering
 
         win.clear(backgroundColor);
         win.draw(sudokuBoard);
+
+        if(solved){
+            sf::Font font;
+            font.loadFromFile("../src/PTSerif-Regular.ttf");
+
+            sf::Text tWin ("You solved!\n   [R] Reset", font);
+            tWin.setCharacterSize(30);
+            tWin.setPosition(sf::Vector2f(330, 50));
+            tWin.setFillColor(sf::Color::White);
+
+            win.draw(tWin);
+        }
         win.display();
     }
 

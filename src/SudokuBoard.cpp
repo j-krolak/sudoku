@@ -37,7 +37,7 @@ sf::Vector2i operator-=(sf::Vector2i& a, const sf::Vector2f& b){
 
 
 SudokuBoard::SudokuBoard():
-size{9,9}, cellSize{50, 50}, outlineColor{140, 140, 140, 255}, outlineThickness{3},margin{180, 180}, outlineColor2{sf::Color(255, 255, 255, 255)},
+size{9,9}, cellSize{50, 50}, outlineColor{120, 120, 120, 255}, outlineThickness{3},margin{180, 180}, outlineColor2{sf::Color(255, 255, 255, 255)},
 selectedColor{sf::Color{100, 200, 100, 255}}, selectedCell{-1, -1}, unselectedColor{sf::Color(0,0,0,0)}
 {
     std::srand(std::time(NULL));
@@ -137,6 +137,13 @@ sf::RectangleShape SudokuBoard::createCell(const sf::Vector2f pos, const sf::Vec
 }
 
 void SudokuBoard::generateRandomSudoku(const int empty){
+    for(int y = 0; y < 9; y++){
+        for(int x = 0; x < 9; x++){
+            sudoku[y][x] = -1;
+            activeCell[y][x] = false;
+        }
+
+    }
     generateFullBoard();
     for(int i = 0; i < empty; i++){
         int x , y;
