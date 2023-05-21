@@ -38,7 +38,7 @@ sf::Vector2i operator-=(sf::Vector2i& a, const sf::Vector2f& b){
 
 SudokuBoard::SudokuBoard():
 size{9,9}, cellSize{50, 50}, outlineColor{120, 120, 120, 255}, outlineThickness{3},margin{180, 180}, outlineColor2{sf::Color(255, 255, 255, 255)},
-selectedColor{sf::Color{100, 200, 100, 255}}, selectedCell{-1, -1}, unselectedColor{sf::Color(0,0,0,0)}
+selectedColor{sf::Color{100, 200, 100, 255}}, selectedCell{-1, -1}, unselectedColor{sf::Color(0,0,0,255)}
 {
     std::srand(std::time(NULL));
     for(int y = 0; y < 9; y++){
@@ -67,6 +67,9 @@ void SudokuBoard::selectCell(sf::Vector2i mousePos){
                     cells[y*size.y  + x].setFillColor(selectedColor);
                 }
 
+            }
+            else if(activeCell[y][x]){
+                cells[y * size.y + x].setFillColor(sf::Color(30, 30, 30, 255));
             }
             else{
                 cells[y * size.y + x].setFillColor(unselectedColor);
@@ -167,6 +170,17 @@ void SudokuBoard::generateRandomSudoku(const int empty){
         while(countSolutions() > 1);
         
     }
+    for(int y = 0; y < size.y; y++){
+        for(int x = 0; x < size.x; x++){
+            if(activeCell[y][x]){
+                cells[y * size.y + x].setFillColor(sf::Color(30, 30, 30, 255));
+            }
+            else{
+                cells[y * size.y + x].setFillColor(unselectedColor);
+            }
+        }
+    }
+       
 }
 
 int SudokuBoard::countSolutions(){
