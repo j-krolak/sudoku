@@ -83,12 +83,6 @@ void SudokuBoard::setNumIncell(unsigned int n){
 }
 
 void SudokuBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    sf::RectangleShape border(cellSize*size);
-    border.setPosition(margin - outlineThickness/2);
-    border.setFillColor(sf::Color(0,0,0,0));
-    border.setOutlineColor(outlineColor2);
-    border.setOutlineThickness(outlineThickness);
-    target.draw(border);
 
     // Draw cells
     
@@ -123,6 +117,12 @@ void SudokuBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const{
             target.draw(tValue);
         }
     }
+    sf::RectangleShape border(cellSize*size);
+    border.setPosition(margin );
+    border.setFillColor(sf::Color(0,0,0,0));
+    border.setOutlineColor(outlineColor2);
+    border.setOutlineThickness(outlineThickness*2);
+    target.draw(border);
 
 
 }
